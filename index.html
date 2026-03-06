@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>폴라스튜디오 - 유치원 홈페이지 디자인 제안</title>
+<meta name="description" content="원장님을 위한 유치원 홈페이지 디자인 제안 페이지입니다. 다양한 스타일 시안을 보고 원하는 방향을 선택해 맞춤 제작할 수 있습니다.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fffdf7;--bg-alt:#fff7ec;--surface:#fff;
+  --text:#2d2d2d;--text-soft:#6c6256;
+  --brand:#f4b534;--brand-strong:#de8f12;--brand-soft:#ffe7b8;
+  --green:#5da85a;--green-soft:#e8f5e9;
+  --line:#efe2ce;--dark:#1f1b17;--dark-2:#181410;
+  --shadow-sm:0 8px 20px rgba(72,42,8,.08);
+  --shadow-md:0 18px 45px rgba(60,33,2,.16);
+  --radius:24px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard',sans-serif;color:var(--text);line-height:1.65;overflow-x:hidden;background:var(--surface)}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+ul{list-style:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+section{position:relative}
+
+/* ===== SCROLL PROGRESS ===== */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1600;background:linear-gradient(90deg,var(--green),var(--brand))}
+
+/* ===== BADGE & HEADING ===== */
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);border:1px solid #c8e6c9;color:#2e7d32;font-size:.85rem;font-weight:600;padding:8px 18px;border-radius:50px;margin-bottom:20px}
+.section-heading{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.3;margin-bottom:16px;letter-spacing:-.02em}
+.section-sub{font-size:1.05rem;color:var(--text-soft);line-height:1.75;max-width:560px}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;background:linear-gradient(135deg,var(--green),#4caf50);color:#fff;font-weight:700;font-size:1rem;padding:16px 36px;border-radius:50px;transition:all .35s ease;border:none;box-shadow:0 10px 22px rgba(76,175,80,.25)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 30px rgba(76,175,80,.35)}
+.btn-dark{display:inline-flex;align-items:center;justify-content:center;min-height:48px;background:#2d2d2d;color:#fff;font-weight:700;padding:14px 32px;border-radius:50px;transition:all .3s ease}
+.btn-dark:hover{background:#444;transform:translateY(-2px)}
+
+/* ===== POLAROID ===== */
+.polaroid{background:#fff;padding:10px 10px 36px;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.08);transform:rotate(var(--rotate,0deg));transition:transform .4s ease,box-shadow .4s ease;position:relative}
+.polaroid::after{content:attr(data-caption);position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:.78rem;color:#888;font-weight:500;letter-spacing:.02em}
+.polaroid:hover{transform:rotate(0deg) scale(1.03);box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.polaroid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
+
+/* ===== ANIMATIONS ===== */
+.fade-up{opacity:0;transform:translateY(40px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,.61,.36,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+@keyframes heroDrift{0%{transform:scale(1.03)}100%{transform:scale(1.08) translateY(-10px)}}
+@keyframes shimmer{0%{transform:translateX(-140%)}100%{transform:translateX(140%)}}
+@keyframes floatShape{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(4deg)}}
+
+/* ===== HEADER ===== */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;transition:all .35s ease}
+.header.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,.06);padding:12px 0}
+.header .container{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:1.5rem;font-weight:900;color:#fff;transition:color .3s;display:flex;align-items:center;gap:8px}
+.logo-leaf{font-size:1.8rem}
+.logo span{color:var(--brand)}
+.header.scrolled .logo{color:var(--text)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-weight:600;font-size:.95rem;color:rgba(255,255,255,.9);transition:color .3s;min-height:44px;display:inline-flex;align-items:center}
+.header.scrolled .nav-links a{color:#555}
+.nav-links a:hover{color:var(--brand)}
+.nav-cta{background:var(--green) !important;color:#fff !important;padding:10px 24px;border-radius:50px;font-weight:700}
+.header.scrolled .nav-cta{color:#fff !important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;padding:8px}
+.hamburger span{width:24px;height:2.5px;background:#fff;border-radius:2px;transition:all .3s}
+.header.scrolled .hamburger span{background:var(--text)}
+.hamburger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:32px}
+.mobile-menu.active{display:flex}
+.mobile-menu a{font-size:1.3rem;font-weight:700;color:var(--text);min-height:48px;display:inline-flex;align-items:center}
+.mobile-menu .close-btn{position:absolute;top:20px;right:24px;font-size:2rem;background:none;border:none;color:var(--text)}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;animation:heroDrift 18s ease-in-out infinite alternate}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(130deg,rgba(30,50,20,.62),rgba(40,30,10,.25),rgba(20,40,15,.58))}
+.hero-content{position:relative;z-index:2;max-width:920px;padding:140px 0 100px}
+.hero .badge{position:relative;overflow:hidden;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+.hero .badge::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shimmer 3.8s linear infinite}
+.hero-heading{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;color:#fff;line-height:1.2;margin-bottom:24px;letter-spacing:-.03em}
+.hero-heading em{font-style:normal;color:#a5d6a7}
+.hero-sub{font-size:1.15rem;color:rgba(255,255,255,.85);line-height:1.8;margin-bottom:40px;max-width:560px}
+.hero-stats{display:flex;gap:40px;margin-top:48px;padding:20px 28px;border-radius:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);max-width:max-content}
+.hero-stat .num{font-size:2.2rem;font-weight:900;color:#a5d6a7}
+.hero-stat .label{font-size:.88rem;color:rgba(255,255,255,.7);margin-top:2px}
+
+/* ===== PROGRAMS ===== */
+.programs{padding:120px 0;background:radial-gradient(circle at 10% 0,#e8f5e9 0,transparent 42%),var(--bg)}
+.programs::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle at 1px 1px,rgba(76,175,80,.08) 1px,transparent 0);background-size:20px 20px}
+.programs-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:24px}
+.programs-top .left{max-width:560px}
+.carousel-nav{display:flex;gap:12px}
+.carousel-btn{width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid #c8e6c9;display:flex;align-items:center;justify-content:center;transition:all .3s;font-size:1.2rem;color:#666;min-height:48px}
+.carousel-btn:hover{border-color:var(--green);background:var(--green);color:#fff}
+.carousel-track{display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:20px 4px 24px;scrollbar-width:none}
+.carousel-track::-webkit-scrollbar{display:none}
+.program-card{min-width:260px;flex-shrink:0;scroll-snap-align:start;text-align:center}
+.program-card .polaroid{--rotate:-2deg;margin-bottom:16px}
+.program-card:nth-child(2) .polaroid{--rotate:1.5deg}
+.program-card:nth-child(3) .polaroid{--rotate:-1deg}
+.program-card:nth-child(4) .polaroid{--rotate:2.5deg}
+.program-card:nth-child(5) .polaroid{--rotate:-1.5deg}
+.program-card:nth-child(6) .polaroid{--rotate:1deg}
+.program-card h3{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.program-card p{font-size:.85rem;color:var(--text-soft)}
+
+/* ===== ABOUT ===== */
+.about{padding:120px 0;background:var(--surface)}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:center}
+.about-visual{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.about-visual .polaroid:nth-child(1){--rotate:-3deg;grid-row:span 2}
+.about-visual .polaroid:nth-child(1) img{aspect-ratio:3/4}
+.about-visual .polaroid:nth-child(2){--rotate:2deg;margin-top:40px}
+.about-visual .polaroid:nth-child(3){--rotate:-1.5deg}
+.about-right .section-sub{margin-bottom:32px}
+.about-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--green);font-size:1rem;transition:gap .3s;min-height:44px;margin-bottom:32px}
+.about-link:hover{gap:14px}
+.feature-cards{display:flex;flex-direction:column;gap:14px}
+.feature-card{display:flex;align-items:flex-start;gap:16px;padding:22px;border-radius:16px;background:#f7faf7;border:1px solid #e0ede0;border-left:4px solid var(--green);transition:all .35s}
+.feature-card:nth-child(2){border-left-color:#66bb6a}
+.feature-card:nth-child(3){border-left-color:#81c784}
+.feature-card:nth-child(4){border-left-color:#a5d6a7}
+.feature-card:hover{background:#eef6ee;transform:translateY(-4px);box-shadow:0 8px 20px rgba(76,175,80,.1)}
+.feature-icon{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#66bb6a,#4caf50);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feature-icon svg{width:22px;height:22px}
+.feature-card h4{font-size:.98rem;font-weight:700;margin-bottom:3px}
+.feature-card p{font-size:.85rem;color:#888;line-height:1.5}
+
+/* ===== GALLERY ===== */
+.gallery{padding:120px 0;background:radial-gradient(circle at 90% 0,#fff3e0 0,transparent 44%),var(--bg)}
+.gallery::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle at 1px 1px,rgba(194,152,85,.08) 1px,transparent 0);background-size:20px 20px}
+.gallery-top{text-align:center;margin-bottom:56px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.gallery-item .polaroid{--rotate:var(--r,0deg)}
+.gallery-item:nth-child(1) .polaroid{--r:-2.5deg}
+.gallery-item:nth-child(2) .polaroid{--r:1.8deg}
+.gallery-item:nth-child(3) .polaroid{--r:-1deg}
+.gallery-item:nth-child(4) .polaroid{--r:2deg}
+.gallery-item:nth-child(5) .polaroid{--r:-1.5deg}
+.gallery-item:nth-child(6) .polaroid{--r:1.2deg}
+
+/* ===== CTA BANNER ===== */
+.cta-banner{padding:120px 0;position:relative;overflow:hidden}
+.cta-banner-bg{position:absolute;inset:0}
+.cta-banner-bg img{width:100%;height:100%;object-fit:cover}
+.cta-banner-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(46,125,50,.75),rgba(27,94,32,.6),rgba(30,50,20,.8))}
+.cta-banner .container{position:relative;z-index:2;text-align:center}
+.cta-banner .badge{background:rgba(165,214,167,.2);border-color:rgba(165,214,167,.3);color:#a5d6a7}
+.cta-banner .section-heading{color:#fff;max-width:700px;margin:0 auto 32px}
+.cta-banner .section-heading em{font-style:normal;color:#a5d6a7}
+
+/* ===== FORM ===== */
+.inquiry{padding:120px 0;background:var(--surface)}
+.inquiry-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:center}
+.inquiry-visual{display:flex;flex-direction:column;gap:20px;align-items:center}
+.inquiry-visual .polaroid:first-child{--rotate:-3deg}
+.inquiry-visual .polaroid:last-child{--rotate:2.5deg;max-width:280px;align-self:flex-end}
+.inquiry-form{padding:36px;border-radius:24px;background:linear-gradient(180deg,#fff,#f7faf7);border:1px solid #dcedc8;box-shadow:0 16px 42px rgba(46,125,50,.08)}
+.inquiry-form h2{margin-bottom:8px}
+.inquiry-form .section-sub{margin-bottom:36px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:.85rem;font-weight:600;color:#666}
+.form-group input,.form-group select{min-height:48px;padding:14px 18px;border-radius:12px;border:1.5px solid #e0e0e0;font-family:inherit;font-size:.95rem;transition:all .3s;background:#fafafa;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 4px rgba(76,175,80,.1)}
+.form-submit{width:100%;margin-top:24px;padding:16px;font-size:1.05rem}
+
+/* ===== REVIEWS ===== */
+.reviews{padding:120px 0;background:var(--bg)}
+.reviews::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle at 1px 1px,rgba(76,175,80,.06) 1px,transparent 0);background-size:20px 20px}
+.reviews-top{text-align:center;margin-bottom:56px}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.review-card{position:relative;padding:36px 32px;border-radius:20px;background:#fff;border:1px solid #e8f5e9;border-left:4px solid var(--green);transition:all .35s}
+.review-card::before{content:'\201C';position:absolute;right:20px;top:-4px;font-size:5rem;color:#c8e6c9;line-height:1;font-family:Georgia,serif}
+.review-card:hover{box-shadow:0 16px 38px rgba(0,0,0,.08);transform:translateY(-6px)}
+.review-stars{color:var(--brand);font-size:1.1rem;margin-bottom:16px;letter-spacing:2px}
+.review-text{font-size:.98rem;line-height:1.8;color:#555;margin-bottom:24px}
+.review-author{display:flex;align-items:center;gap:14px}
+.review-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1rem;background:var(--green)}
+.review-info .name{font-weight:700;font-size:.95rem}
+.review-info .org{font-size:.82rem;color:#999}
+
+/* ===== PHOTO STRIP ===== */
+.photo-strip{overflow:hidden}
+.strip-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.strip-item{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer}
+.strip-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.strip-item:hover img{transform:scale(1.1)}
+.strip-item .strip-overlay{position:absolute;inset:0;background:rgba(46,125,50,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.strip-item:hover .strip-overlay{opacity:1}
+.strip-overlay svg{width:32px;height:32px}
+.strip-label{text-align:center;padding:24px;background:var(--bg)}
+.strip-label span{font-size:.95rem;color:#999}
+.strip-label a{font-weight:700;color:var(--green);margin-left:6px}
+
+/* ===== FOOTER CTA ===== */
+.footer-cta{background:linear-gradient(135deg,var(--green),#388e3c);padding:36px 0}
+.footer-cta .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-cta p{font-size:1.1rem;font-weight:700;color:#fff}
+.footer-cta .btn-dark{background:#fff;color:var(--green)}
+
+/* ===== FOOTER ===== */
+.footer{background:linear-gradient(180deg,var(--dark),var(--dark-2));color:#ccc;padding:80px 0 0}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid #333}
+.footer h4{color:#fff;font-size:1rem;font-weight:700;margin-bottom:20px}
+.footer p{font-size:.9rem;line-height:1.7;color:#999;margin-bottom:20px}
+.newsletter-form{display:flex;gap:8px}
+.newsletter-form input{flex:1;min-height:48px;padding:12px 18px;border-radius:50px;border:1px solid #3a3a3a;background:#262626;color:#fff;font-family:inherit;outline:none;font-size:.9rem;transition:all .3s}
+.newsletter-form input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(76,175,80,.18)}
+.newsletter-form button{min-height:48px;padding:12px 24px;border-radius:50px;background:var(--green);color:#fff;font-weight:700;font-size:.9rem;white-space:nowrap;transition:background .3s}
+.newsletter-form button:hover{background:#43a047}
+.footer-links a{font-size:.9rem;color:#999;padding:5px 0;transition:color .3s,transform .3s;min-height:36px;display:inline-flex;align-items:center}
+.footer-links a:hover{color:#a5d6a7;transform:translateX(4px)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;flex-wrap:wrap;gap:16px}
+.footer-bottom p{font-size:.85rem;color:#666}
+.social-links{display:flex;gap:14px}
+.social-links a{width:40px;height:40px;border-radius:50%;background:#2a2a2a;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.social-links a:hover{background:var(--green)}
+.social-links a svg{width:18px;height:18px;fill:#999;transition:fill .3s}
+.social-links a:hover svg{fill:#fff}
+
+/* ===== FLOATING SHAPES ===== */
+.shape{position:absolute;border-radius:50%;pointer-events:none;z-index:0;animation:floatShape 6s ease-in-out infinite}
+.shape-1{width:120px;height:120px;background:rgba(93,168,90,.08);top:15%;right:8%;animation-delay:0s}
+.shape-2{width:80px;height:80px;background:rgba(244,181,52,.1);bottom:20%;left:5%;animation-delay:1.5s}
+.shape-3{width:60px;height:60px;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;background:rgba(93,168,90,.1);top:40%;left:12%;animation-delay:3s}
+.shape-4{width:100px;height:100px;background:rgba(244,181,52,.07);top:10%;left:3%;animation-delay:2s;border-radius:40% 60% 55% 45%/60% 40% 60% 40%}
+.shape-5{width:70px;height:70px;background:rgba(93,168,90,.06);bottom:15%;right:12%;animation-delay:4s}
+.about::after{content:'';position:absolute;top:60px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(93,168,90,.06),transparent 70%);pointer-events:none}
+.about::before{content:'';position:absolute;bottom:40px;left:-60px;width:160px;height:160px;border-radius:40% 60% 55% 45%/60% 40% 60% 40%;background:rgba(244,181,52,.06);pointer-events:none;animation:floatShape 8s ease-in-out infinite}
+.reviews::after{content:'';position:absolute;top:-30px;right:10%;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(93,168,90,.07),transparent 70%);pointer-events:none}
+.gallery::after{content:'';position:absolute;bottom:20px;left:-30px;width:180px;height:180px;border-radius:30% 70% 60% 40%/50% 60% 40% 50%;background:rgba(244,181,52,.05);pointer-events:none;animation:floatShape 7s ease-in-out infinite reverse}
+
+/* ===== SCROLL TOP ===== */
+.scroll-top{position:fixed;right:24px;bottom:24px;width:48px;height:48px;border-radius:50%;border:none;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 8px 20px rgba(76,175,80,.3);opacity:0;pointer-events:none;transform:translateY(14px);transition:all .3s;z-index:1500}
+.scroll-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+.scroll-top:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(76,175,80,.4)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:992px){
+  .programs,.about,.gallery,.cta-banner,.inquiry,.reviews{padding:80px 0}
+  .about-grid,.inquiry-grid{grid-template-columns:1fr;gap:40px}
+  .about-visual{max-width:500px;margin:0 auto}
+  .gallery-grid,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:28px}
+}
+@media(max-width:768px){
+  body{font-size:15px}
+  .programs,.about,.gallery,.cta-banner,.inquiry,.reviews{padding:60px 0}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero-content{padding:100px 0 60px}
+  .hero-heading{font-size:clamp(1.75rem,8vw,2.4rem)}
+  .hero-stats{flex-direction:column;gap:14px;padding:16px 18px}
+  .hero-stat{display:flex;align-items:center;gap:12px}
+  .programs-top{flex-direction:column;align-items:flex-start}
+  .program-card{min-width:220px}
+  .about-visual{grid-template-columns:1fr 1fr;gap:12px}
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:20px}
+  .reviews-grid{grid-template-columns:1fr}
+  .strip-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .footer,.footer-bottom{text-align:center}
+  .footer-bottom{justify-content:center}
+  .social-links{justify-content:center}
+  .footer-cta .container{flex-direction:column;text-align:center}
+  .form-grid{grid-template-columns:1fr}
+  .inquiry-form{padding:24px}
+  .inquiry-visual .polaroid:last-child{align-self:center}
+}
+@media(max-width:480px){
+  .container{padding:0 16px}
+  .hero{min-height:92vh}
+  .about-visual{grid-template-columns:1fr;gap:16px}
+  .about-visual .polaroid:nth-child(1) img{aspect-ratio:4/3}
+  .about-visual .polaroid:nth-child(1){grid-row:auto}
+  .about-visual .polaroid:nth-child(2){margin-top:0}
+  .gallery-grid{grid-template-columns:1fr;gap:24px}
+  .strip-grid{grid-template-columns:repeat(2,1fr)}
+  .newsletter-form{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="container">
+    <a href="#" class="logo"><span class="logo-leaf">&#127912;</span> 폴라<span>스튜디오</span></a>
+    <nav class="nav-links">
+      <a href="#programs">교육과정</a>
+      <a href="#gallery">갤러리</a>
+      <a href="#reviews">후기</a>
+      <a href="#inquiry" class="nav-cta">제작 문의</a>
+    </nav>
+    <button type="button" class="hamburger" id="menuBtn" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <button type="button" class="close-btn" id="closeMenu" aria-label="메뉴 닫기">&times;</button>
+  <a href="#programs" class="mobile-link">교육과정</a>
+  <a href="#gallery" class="mobile-link">갤러리</a>
+  <a href="#reviews" class="mobile-link">후기</a>
+  <a href="#inquiry" class="mobile-link">제작 문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="images/pola/pola1.jpg" alt="유치원 아이들의 즐거운 야외 활동" loading="eager"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="badge fade-up">✨ 유치원 홈페이지 디자인 제안</div>
+      <h1 class="hero-heading fade-up d1">원장님이 선택하는<br>유치원 <em>홈페이지 시안</em></h1>
+      <p class="hero-sub fade-up d2">원장님이 원하시는 스타일의 시안을 선택하시면,<br>빠르고 깔끔하게 유치원 전용 홈페이지를 제작해 드립니다.</p>
+      <div class="fade-up d3" style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#programs" class="btn-primary">시안 둘러보기 &rarr;</a>
+        <a href="#inquiry" class="btn-dark">제작 문의하기</a>
+      </div>
+      <div class="hero-stats fade-up d4">
+        <div class="hero-stat"><div class="num">50+</div><div class="label">제작 경험</div></div>
+        <div class="hero-stat"><div class="num">98%</div><div class="label">만족도</div></div>
+        <div class="hero-stat"><div class="num">7일</div><div class="label">평균 제작기간</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="shape shape-1"></div>
+<div class="shape shape-2"></div>
+<div class="shape shape-3"></div>
+<div class="shape shape-4"></div>
+<div class="shape shape-5"></div>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="container">
+    <div class="programs-top">
+      <div class="left fade-up">
+        <div class="badge">디자인 유형</div>
+        <h2 class="section-heading">원장님 취향에 맞는<br>홈페이지 스타일을 고르세요</h2>
+      </div>
+      <div class="carousel-nav fade-up d1">
+        <button type="button" class="carousel-btn" id="prevBtn" aria-label="이전">&#10094;</button>
+        <button type="button" class="carousel-btn" id="nextBtn" aria-label="다음">&#10095;</button>
+      </div>
+    </div>
+    <div class="carousel-track fade-up d2" id="carouselTrack">
+      <div class="program-card">
+        <div class="polaroid" data-caption="함께 배우는 즐거움"><img src="images/pola/pola2.jpg" alt="누리과정 수업" loading="lazy"></div>
+        <h3>클래식형</h3><p>안정감 있고 신뢰를 주는 정통형 구성</p>
+      </div>
+      <div class="program-card">
+        <div class="polaroid" data-caption="우정을 키워요"><img src="images/pola/pola3.jpg" alt="인성교육" loading="lazy"></div>
+        <h3>내추럴형</h3><p>따뜻하고 감성적인 원 분위기 중심</p>
+      </div>
+      <div class="program-card">
+        <div class="polaroid" data-caption="무대 위의 주인공"><img src="images/pola/pola4.jpg" alt="예술활동" loading="lazy"></div>
+        <h3>활동강조형</h3><p>행사/체험 사진을 강하게 보여주는 구조</p>
+      </div>
+      <div class="program-card">
+        <div class="polaroid" data-caption="전통을 배워요"><img src="images/pola/pola5.jpg" alt="전통문화 체험" loading="lazy"></div>
+        <h3>프리미엄형</h3><p>고급스러운 타이포와 넓은 레이아웃</p>
+      </div>
+      <div class="program-card">
+        <div class="polaroid" data-caption="꿈을 노래해요"><img src="images/pola/pola6.jpg" alt="발표회" loading="lazy"></div>
+        <h3>모바일중심형</h3><p>휴대폰에서 빠르고 보기 쉬운 UX</p>
+      </div>
+      <div class="program-card">
+        <div class="polaroid" data-caption="자연과 함께"><img src="images/pola/pola7.jpg" alt="체험학습" loading="lazy"></div>
+        <h3>상담전환형</h3><p>문의/상담 신청 전환에 최적화된 구성</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <div class="polaroid" data-caption="소풍 가는 날"><img src="images/pola/pola8.jpg" alt="밝게 웃는 아이" loading="lazy"></div>
+        <div class="polaroid" data-caption="신나는 놀이"><img src="images/pola/pola9.jpg" alt="야외 활동" loading="lazy"></div>
+        <div class="polaroid" data-caption="우리는 친구"><img src="images/pola/pola3.jpg" alt="친구들과 함께" loading="lazy"></div>
+      </div>
+      <div class="about-right fade-up d1">
+        <div class="badge">제작 방식 안내</div>
+        <h2 class="section-heading">시안 선택부터 오픈까지<br>원장님과 함께 진행합니다</h2>
+        <p class="section-sub">비주얼 톤은 놀이 중심 교육 철학을 바탕으로, 아이들이 스스로 탐구하고 발견하는 즐거움을 경험하도록 합니다. 넓은 자연 학습장과 안전한 시설에서 마음껏 뛰놀며 성장합니다.</p>
+        <a href="#inquiry" class="about-link">입학 안내 보기 &rarr;</a>
+        <div class="feature-cards">
+          <div class="feature-card fade-up">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>자연</title><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#fff" stroke-width="2"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div><h4>자연친화 교육</h4><p>텃밭 가꾸기, 숲 체험 등 자연과 함께하는 생태 교육</p></div>
+          </div>
+          <div class="feature-card fade-up d1">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>안전</title><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#fff" stroke-width="2"/></svg></div>
+            <div><h4>안전한 환경</h4><p>CCTV, 공기청정 시스템 등 최신 안전 설비 완비</p></div>
+          </div>
+          <div class="feature-card fade-up d2">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>교사</title><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#fff" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="#fff" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#fff" stroke-width="2"/></svg></div>
+            <div><h4>전문 교사진</h4><p>유아교육 전공 교사들의 따뜻하고 전문적인 돌봄</p></div>
+          </div>
+          <div class="feature-card fade-up d3">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>급식</title><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div><h4>건강한 급식</h4><p>친환경 식재료로 만드는 영양 균형 잡힌 식단</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="gallery-top fade-up">
+      <div class="badge">활동 갤러리</div>
+      <h2 class="section-heading">우리 아이들의<br>빛나는 순간들</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item fade-up"><div class="polaroid" data-caption="메인 비주얼형"><img src="images/pola/pola12.jpg" alt="학예회" loading="lazy"></div></div>
+      <div class="gallery-item fade-up d1"><div class="polaroid" data-caption="감성 카드형"><img src="images/pola/pola13.jpg" alt="자연 체험" loading="lazy"></div></div>
+      <div class="gallery-item fade-up d2"><div class="polaroid" data-caption="행사 강조형"><img src="images/pola/pola14.jpg" alt="발표회" loading="lazy"></div></div>
+      <div class="gallery-item fade-up d3"><div class="polaroid" data-caption="스토리텔링형"><img src="images/pola/pola15.jpg" alt="체험 활동" loading="lazy"></div></div>
+      <div class="gallery-item fade-up d4"><div class="polaroid" data-caption="밝은 톤형"><img src="images/pola/pola16.jpg" alt="숲 체험" loading="lazy"></div></div>
+      <div class="gallery-item fade-up d5"><div class="polaroid" data-caption="신뢰감 강조형"><img src="images/pola/pola2.jpg" alt="소풍" loading="lazy"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="cta-banner-bg"><img src="images/pola/pola1.jpg" alt="따뜻한 조명 장식" loading="lazy"></div>
+  <div class="container">
+    <div class="badge fade-up">15년 전통의 교육</div>
+    <h2 class="section-heading fade-up d1">우리 원에 맞는 <em>홈페이지 시안</em>을<br>선택하고 바로 제작하세요</h2>
+    <a href="#inquiry" class="btn-primary fade-up d2">제작 상담 신청 &rarr;</a>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="reviews-top fade-up">
+      <div class="badge">원장님 후기</div>
+      <h2 class="section-heading">제작을 의뢰하신<br>원장님들의 이야기</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">홈페이지 시안을 보자마자 '이거다!' 싶었어요. 학부모님들 반응이 정말 좋아서 원아 모집에도 큰 도움이 됐습니다. 수정 요청도 빠르게 반영해 주셔서 감사합니다.</p>
+        <div class="review-author">
+          <div class="review-avatar">김</div>
+          <div class="review-info"><div class="name">김미영 원장님</div><div class="org">해맑은 유치원</div></div>
+        </div>
+      </div>
+      <div class="review-card fade-up d1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">다른 업체에서 두 번이나 실패하고 찾아왔는데, 처음부터 원하던 느낌을 정확히 잡아주셨어요. 모바일에서도 예쁘게 나오니까 학부모님들이 편하게 보신대요.</p>
+        <div class="review-author">
+          <div class="review-avatar">이</div>
+          <div class="review-info"><div class="name">이수진 원장님</div><div class="org">푸른숲 어린이집</div></div>
+        </div>
+      </div>
+      <div class="review-card fade-up d2">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">7일 만에 이렇게 완성도 높은 홈페이지가 나올 줄 몰랐어요. 사진만 보내드렸을 뿐인데 폴라로이드 느낌으로 너무 감성적으로 만들어 주셨어요. 강력 추천합니다!</p>
+        <div class="review-author">
+          <div class="review-avatar">박</div>
+          <div class="review-info"><div class="name">박지현 원장님</div><div class="org">꿈나무 유치원</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INQUIRY FORM -->
+<section class="inquiry" id="inquiry">
+  <div class="container">
+    <div class="inquiry-grid">
+      <div class="inquiry-visual fade-up">
+        <div class="polaroid" data-caption="까꿍!"><img src="images/pola/pola10.jpg" alt="밝게 웃는 아이" loading="lazy"></div>
+        <div class="polaroid" data-caption="꿈을 그려요"><img src="images/pola/pola11.jpg" alt="놀이하는 아이" loading="lazy"></div>
+      </div>
+      <div class="inquiry-form">
+        <div class="badge fade-up">원장님 문의</div>
+        <h2 class="section-heading fade-up d1">원장님 맞춤 제작 상담을<br>신청해 주세요</h2>
+        <p class="section-sub fade-up d2">우리 아이에게 맞는 프로그램을 안내해 드립니다. 편하게 문의해 주세요.</p>
+        <form id="inquiryForm" class="fade-up d3">
+          <div class="form-grid">
+            <div class="form-group"><label for="childName">아이 이름 *</label><input type="text" id="childName" required placeholder="아이 이름을 입력해 주세요"></div>
+            <div class="form-group"><label for="childAge">아이 나이 *</label><input type="text" id="childAge" required placeholder="예: 5세 (2021년생)"></div>
+            <div class="form-group"><label for="parentName">보호자 성함 *</label><input type="text" id="parentName" required placeholder="보호자 성함"></div>
+            <div class="form-group"><label for="phone">연락처 *</label><input type="tel" id="phone" required placeholder="010-0000-0000"></div>
+            <div class="form-group"><label for="email">이메일</label><input type="email" id="email" placeholder="email@example.com"></div>
+            <div class="form-group"><label for="program">관심 프로그램</label>
+              <select id="program">
+                <option value="">선택해 주세요</option>
+                <option>만 3세반 (꽃잎반)</option>
+                <option>만 4세반 (나무반)</option>
+                <option>만 5세반 (하늘반)</option>
+                <option>방과후 과정</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary form-submit">제작 상담 신청하기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<section class="photo-strip">
+  <div class="strip-grid">
+    <div class="strip-item"><img src="images/pola/pola9.jpg" alt="갤러리" loading="lazy"><div class="strip-overlay"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>사진</title><rect x="3" y="3" width="18" height="18" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#fff"/><path d="M21 15l-5-5L5 21" stroke="#fff" stroke-width="2"/></svg></div></div>
+    <div class="strip-item"><img src="images/pola/pola11.jpg" alt="갤러리" loading="lazy"><div class="strip-overlay"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>사진</title><rect x="3" y="3" width="18" height="18" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#fff"/><path d="M21 15l-5-5L5 21" stroke="#fff" stroke-width="2"/></svg></div></div>
+    <div class="strip-item"><img src="images/pola/pola13.jpg" alt="갤러리" loading="lazy"><div class="strip-overlay"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>사진</title><rect x="3" y="3" width="18" height="18" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#fff"/><path d="M21 15l-5-5L5 21" stroke="#fff" stroke-width="2"/></svg></div></div>
+    <div class="strip-item"><img src="images/pola/pola16.jpg" alt="갤러리" loading="lazy"><div class="strip-overlay"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>사진</title><rect x="3" y="3" width="18" height="18" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#fff"/><path d="M21 15l-5-5L5 21" stroke="#fff" stroke-width="2"/></svg></div></div>
+    <div class="strip-item"><img src="images/pola/pola6.jpg" alt="갤러리" loading="lazy"><div class="strip-overlay"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>사진</title><rect x="3" y="3" width="18" height="18" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#fff"/><path d="M21 15l-5-5L5 21" stroke="#fff" stroke-width="2"/></svg></div></div>
+    <div class="strip-item"><img src="images/pola/pola15.jpg" alt="갤러리" loading="lazy"><div class="strip-overlay"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><title>사진</title><rect x="3" y="3" width="18" height="18" rx="2" stroke="#fff" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#fff"/><path d="M21 15l-5-5L5 21" stroke="#fff" stroke-width="2"/></svg></div></div>
+  </div>
+  <div class="strip-label"><span>우리 유치원 소식</span><a href="#">@haemalguen_kids</a></div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <div class="container">
+    <p>원장님 전용 홈페이지 시안 선택 및 제작 상담이 가능합니다</p>
+    <a href="#inquiry" class="btn-dark">지금 제작 문의하기</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>폴라스튜디오 소식 받기</h4>
+        <p>유치원 행사 소식과 교육 정보를 이메일로 받아보세요.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault();alert('구독 신청이 완료되었습니다!');">
+          <input type="email" placeholder="이메일 주소 입력" required>
+          <button type="submit">구독</button>
+        </form>
+      </div>
+      <div>
+        <h4>디자인 유형</h4>
+        <div class="footer-links">
+          <a href="#">클래식형</a><a href="#">내추럴형</a><a href="#">활동강조형</a><a href="#">모바일중심형</a><a href="#">상담전환형</a>
+        </div>
+      </div>
+      <div>
+        <h4>안내</h4>
+        <div class="footer-links">
+          <a href="#">제작 절차</a><a href="#">요금 안내</a><a href="#">수정 정책</a><a href="#">자주 묻는 질문</a><a href="#">제작 문의</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 폴라스튜디오. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><title>인스타그램</title><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="블로그"><svg viewBox="0 0 24 24" aria-hidden="true"><title>블로그</title><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+        <a href="#" aria-label="카카오톡"><svg viewBox="0 0 24 24" aria-hidden="true"><title>카카오톡</title><path d="M12 3C6.48 3 2 6.58 2 10.94c0 2.8 1.86 5.27 4.66 6.67l-.95 3.47c-.08.3.25.54.52.38l4.13-2.73c.53.06 1.07.09 1.64.09 5.52 0 10-3.58 10-7.94S17.52 3 12 3z" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button type="button" class="scroll-top" id="scrollTopBtn" aria-label="맨 위로">&#8593;</button>
+
+<script>
+const header=document.getElementById('header'),menuBtn=document.getElementById('menuBtn'),closeMenuBtn=document.getElementById('closeMenu'),mobileMenu=document.getElementById('mobileMenu'),scrollProgress=document.getElementById('scrollProgress'),scrollTopBtn=document.getElementById('scrollTopBtn');
+function openMenu(){mobileMenu.classList.add('active');menuBtn.classList.add('active');document.body.style.overflow='hidden'}
+function closeMenu(){mobileMenu.classList.remove('active');menuBtn.classList.remove('active');document.body.style.overflow=''}
+menuBtn.addEventListener('click',function(){mobileMenu.classList.contains('active')?closeMenu():openMenu()});
+closeMenuBtn.addEventListener('click',closeMenu);
+document.querySelectorAll('.mobile-link').forEach(function(a){a.addEventListener('click',closeMenu)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+var track=document.getElementById('carouselTrack');
+document.getElementById('prevBtn').addEventListener('click',function(){track.scrollBy({left:-290,behavior:'smooth'})});
+document.getElementById('nextBtn').addEventListener('click',function(){track.scrollBy({left:290,behavior:'smooth'})});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(function(el){obs.observe(el)});
+window.addEventListener('scroll',function(){header.classList.toggle('scrolled',window.scrollY>60);var p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;scrollProgress.style.width=Math.min(Math.max(p,0),100)+'%';scrollTopBtn.classList.toggle('visible',window.scrollY>500)});
+scrollTopBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('inquiryForm').addEventListener('submit',function(e){e.preventDefault();alert('입학 상담 신청이 접수되었습니다.\n빠른 시일 내에 연락드리겠습니다.');this.reset()});
+</script>
+</body>
+</html>
